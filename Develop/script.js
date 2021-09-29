@@ -11,31 +11,24 @@ var now = moment();
 var currentHour = moment().format("LT");
 var textArea = $(".activityText");
 var activityEntry;
-var allNotes = ["", "", "", "", "", "", "", "", ""];
+var selectedInput;
+var selectedTime;
+var comparedTime = moment().format("HH")
 
 
-// Might need, later
-// JSON.stringify
+// The stuff for coloring
+textArea.each(function(index) {
+    
+        var dataHour = $(this).closest(".row").children(".time").attr("data-hour")
+    
+        if (dataHour > comparedTime ) {
+            $(this).addClass("future")}
+        if (dataHour < comparedTime ) {
+            $(this).addClass("past")}
+        if (dataHour === comparedTime ) {
+            $(this).addClass("present")}
 
-
-
-// For determining past/present/future
-// $("input").each(function(){
-//     var dataHour = $(this).attr("data-hour")
-//     console.log(dataHour);
-//   Color coding
-//     if(data-hour > currentHour) {
-//     addClass("future")
-//     }
-//     if else(data-hour < currentHour) {
-//     addClass("past")    
-//     }
-//     else {
-//         addClass("present")
-//     }
-
-// })
-
+})
 
 
 //Displaying Time on Loading page
@@ -45,49 +38,18 @@ timeDisplay.text(now)
 
 // Event Listener for saving activities
 saveBtn.on("click", function(){
+    // debugger
     // use $(this) to get the button that was clicked, and traverse the dom to find the sibling textarea
     selectedInput = $(this).closest(".row").children("input")
-    localStorage.setItem(allNotes, selectedInput.val())
-    
-    // console.log( $(this).closest(".row").children("input") );
+    // console.log(selectedInput)
+    selectedTime = $(this).closest(".row").children(".time").attr("data-hour")
+    // console.log(selectedTime)
+    localStorage.setItem(selectedTime, selectedInput.val())
 
 
-    // figure out based on the timeblock what item in the array should be updated
-    // update just that item 
-    // save the entire array to local storage
-
-
-    // activityEntry = textArea.val()
-    // console.log(activityEntry)
-    // localStorage.setItem("Activity", textArea.val())
-    //textArea.val(localStorage.getItem("Activity"))
-    // if ((this)===allNotes.button){
-    //     localStorage.setItem("Activity", textArea.val())
-    //     textArea.val(localStorage.getItem("Activity"))
-    //     .closest(allNotes.activityLog)
-        // Above item is not being detected in debugger, format adjustment required
     }
 )
 
-// Color coding
-// if(data-hour>now) {
-//     addClass("future")
-// }
-//     if else (data-hour<now) {
-//     addClass("past")    
-//     }
-//     else {
-//         addClass("present")
-//     }
-
-function initializa(){
-
-}
-
-
-function recordActivity() {
-
-}
 
 
 
